@@ -18,7 +18,7 @@ function App() {
   return (
     <div>
       <h1>{sayHello(studentName)}</h1>
-      <p>Course: {courseTitle}</p>
+      <p>Course: {courseTitle}</p>  
       <p>Name: {student.name}</p>
       <p>Age: {student.age}</p>
       <p>Track: {student.track}</p>
