@@ -12,7 +12,7 @@ function App() {
   const student = {
     name: "Rayen",
     age: 21,
-    track: "Finance & Web Development"
+    track: "Web Development"
   };
 
   return (
