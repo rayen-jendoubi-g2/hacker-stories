@@ -1,95 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-const list = [
+const stories = [
   {
-    title: "react",
-    url: "https://reactjs.org/",
-    author: "jordan",
-    num_comments: 2,
-    points: 3,
-    object_ID: 0,
+    objectID: "1",
+    title: "React 19 Released",
+    url: "https://react.dev",
+    author: "dan_abramov",
+    points: 150,
+    num_comments: 45,
   },
   {
-    title: "redux",
-    url: "https://redux.js.org/",
-    author: "dan",
-    num_comments: 2,
-    points: 5,
-    object_ID: 1,
+    objectID: "2",
+    title: "JavaScript Trends in 2026",
+    url: "https://javascript.com",
+    author: "frontend_master",
+    points: 98,
+    num_comments: 20,
   },
-]
-
-function Title() {
-  return (
-    <div>
-      <h1>My hacker stories</h1>
-    </div>
-  )
-}
-
-function Search() {
-  return (
-    <div>
-      <label htmlFor="search">Search:</label>
-      <input id="search" type="text" />
-    </div>
-  )
-}
-
-function List() {
-  return (
-    <ul>
-      {list.map((item) => (
-        <li key={item.object_ID}>
-          <span>
-            <a href={item.url}>{item.title}</a>
-          </span>
-          <span> {item.author}</span>
-          <span>{item.num_comments}</span>
-          <span>{item.points}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+    <div>
+      <h1>Hacker News Clone</h1>
 
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+      {stories.map((story) => (
+        <div key={story.objectID}>
+          <h3>
+            <a
+              href={story.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {story.title}
+            </a>
+          </h3>
 
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-
-      {/* Custom components */}
-      <Title />
-      <Search />
-      <List />
-    </>
-  )
+          <p>
+            <span>Author: {story.author} | </span>
+            <span>Points: {story.points} | </span>
+            <span>Comments: {story.num_comments}</span>
+          </p>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default App
+
