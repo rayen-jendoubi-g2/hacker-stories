@@ -23,10 +23,11 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('search') || 'React');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    localStorage.setItem('search', event.target.value);
   };
 
   const searchedStories = stories.filter((story) =>
@@ -36,64 +37,60 @@ const App = () => {
   return (
     <div>
       <Header />
-      <Search onSearch={handleSearch} />
+      <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={searchedStories} />
     </div>
   );
 };
 
-const Search = (props) => (
+const Search = ({ search, onSearch }) => (
   <div>
     <label htmlFor="search"> Search: </label>
-    <input id="search" type="text" onChange={props.onSearch} />
+    <input id="search" value={search} type="text" onChange={onSearch} />
   </div>
 );
 
-const List = (props) => {
-  console.log('List rendered');
-  return (
-    <ul>
-      {props.list.map((item) => (
-        <Item key={item.objectID} item={item} />
-      ))}
-    </ul>
-  );
-};
+const List = ({ list }) => (
+  <ul>
+    {list.map((item) => (
+      <Item key={item.objectID} item={item} />
+    ))}
+  </ul>
+);
 
-const Item = (props) => {
-  console.log("Item rendered");
-  return (
-    <li>
-      <span>
-        <a href={props.item.url}>{props.item.title}</a>
-      </span>
-      <span> {props.item.author}</span>
-      <span> {props.item.num_comments}</span>
-      <span> {props.item.points}</span>
-    </li>
-  );
-};
+const Item = ({ item }) => (
+  <li>
+    <span>
+      <a href={item.url}>{item.title}</a>
+    </span>
+    <span> {item.author}</span>
+    <span> {item.num_comments}</span>
+    <span> {item.points}</span>
+  </li>
+);
 
 const Header = () => <h1>My Hacker Stories</h1>;
 
 export default App;
 /*
-Props vs State:
-- Props are read-only values passed from a parent component to a child. 
-  They let components receive data but cannot be changed inside the child.
-- State is data owned and managed inside a component. 
-  It can change over time (with setState/useState) and triggers re-renders.
+What is a controlled component?
+- A controlled component is an input element (like <input>, <textarea>, <select>) 
+  whose value is fully managed by React state. 
+  The displayed value always comes from state, and changes are handled through event handlers.
 
-Why lift state up:
-- When multiple components need to share or react to the same data, 
-  the state should live in their closest common parent. 
-  This ensures a single source of truth and keeps data flow predictable.
+What is a side effect in React?
+- A side effect is any operation that affects something outside the component’s scope 
+  (e.g., fetching data, updating localStorage, subscribing/unsubscribing, logging).
+  It’s code that runs in addition to rendering UI.
 
-Where filtering logic should live:
-- Filtering logic should live in the component that owns the data (App). 
-  That way, the child components (like List) only receive the already-filtered data 
-  and remain focused on presentation, not business logic.
+Why do we use useEffect instead of calling code directly?
+- useEffect ensures side effects run at the right time in the component lifecycle 
+  (after render, when dependencies change, or on unmount).
+- Calling code directly inside the component body would run on every render, 
+  which can cause bugs or performance issues. 
+  useEffect gives us control over when and how often side effects execute.
 */
+
 
 
